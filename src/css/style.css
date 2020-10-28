@@ -1,0 +1,39 @@
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.container {
+  width: 1000px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.search {
+  display: block;
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.country-list-item:hover {
+  cursor: pointer;
+}
+
+.about-country {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  text-align: center;
+}
+
+.about-country-list {
+  margin-right: 30px;
+}
+
+.country-img {
+  border: 1px solid grey;
+}
