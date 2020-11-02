@@ -3,8 +3,7 @@ import * as PNotifyDesktop from '../../node_modules/@pnotify/desktop';
 import '../../node_modules/@pnotify/core/dist/BrightTheme.css';
 import "../../node_modules/@pnotify/core/dist/PNotify.css";
 import fetchCountries from './fetchCountries.js';
-import _ from 'lodash';
-import 'lodash.debounce';
+import debounce from '../../node_modules/lodash.debounce/index.js'
 
 defaultModules.set(PNotifyDesktop, {});
 const inputRef = document.querySelector('input');
@@ -38,7 +37,6 @@ const onSelectCountry = data => {
     helpRef.innerHTML = ``;
     clearRef.disabled = true;
     inputRef.value = '';
-
     let objCountry = data[0];
     const { name, capital, population, languages, flag } = objCountry;
                 
@@ -66,8 +64,12 @@ const onSelectCountry = data => {
 
 const onInput = e => { 
     country = e.target.value;
+    if (!e.target.value) { 
+        helpRef.innerHTML = '';
+        return
+    }
     fetchCountries(country)
-    .then(data => data.json())
+        .then(data => data.json())
         .then(data => {
             if (data.length > 10) {
                 const myNotice = error({
@@ -82,10 +84,10 @@ const onInput = e => {
                     });
                     return
                 }
-                if (data.length === 1) {
+            if (data.length === 1) {
                     onSelectCountry(data);
                 }
-                else {
+            else {
                     clearRef.disabled = false;
                     helpRef.innerHTML = `<ul class="country-list"></ul>`;
                     const helpListRef = document.querySelector('.country-list');
@@ -120,12 +122,12 @@ const helpFn = e => {
 }
 
 const clearFn = function () { 
-    resultRef.innerHTML = ``;
-    helpRef.innerHTML = ``;
+    resultRef.innerHTML = '';
+    helpRef.innerHTML = '';
     inputRef.value = '';
     clearRef.disabled = true;
 }
 
-inputRef.addEventListener('input', _.debounce(onInput, 500));
+inputRef.addEventListener('input', debounce(onInput, 500));
 helpRef.addEventListener('click', helpFn);
-clearRef.addEventListener('click', clearFn)
+clearRef.addEventListener('click', clearFn);
