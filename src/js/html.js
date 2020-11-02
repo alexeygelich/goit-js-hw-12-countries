@@ -5,7 +5,8 @@ import "../../node_modules/@pnotify/core/dist/PNotify.css";
 import fetchCountries from './fetchCountries.js';
 import debounce from '../../node_modules/lodash.debounce/index.js'
 
-defaultModules.set(PNotifyDesktop, {});
+defaultModules.set(PNotifyDesktop, { delay: 100, });
+
 const inputRef = document.querySelector('input');
 const resultRef = document.querySelector('.result');
 const helpRef = document.querySelector('.help');
@@ -75,6 +76,7 @@ const onInput = e => {
                 const myNotice = error({
                     title: 'Too many matches found',
                     text: "Please enter a more specific query",
+                    delay: 500,
                     modules: new Map([
                         ...defaultModules,
                         [PNotifyDesktop, {
@@ -98,10 +100,10 @@ const onInput = e => {
             
         })
         .catch(err => {
-            inputRef.value = '';
             const errNotice = error({
                     title: 'Invalid input format',
-                    text: "Please try again",
+                text: "Please try again",
+                    delay: 500,
                     modules: new Map([
                         ...defaultModules,
                         [PNotifyDesktop, {
